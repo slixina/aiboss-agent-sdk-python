@@ -112,8 +112,17 @@ class AgentRunner:
 
         executor = self.executors.get(task_type)
         if not executor:
-            logger.error(f"No executor found for task type: {task_type}")
-            self.client.submit_task(task_id, {"error": f"Unknown task type: {task_type}"}, 0, success=False)
+            logger.warning(f"No executor found for task type: {task_type}. Failing task gracefully.")
+            # Submit failure so the task is not stuck in 'assigned' state until timeout
+            try:
+                self.client.submit_task(
+                    task_id=task_id, 
+                    result={"error": f"Agent capability mismatch: No executor for type '{task_type}'"}, 
+                    duration_ms=0, 
+                    success=False
+                )
+            except Exception as e:
+                logger.error(f"Failed to submit error result: {e}")
             return
 
         logger.info(f"Executing task {task_id} ({task_type})")

@@ -56,7 +56,8 @@ class Config:
 
     @property
     def allowed_domains(self) -> List[str]:
-        return self._config.get("allowed_domains", ["google.com", "twitter.com", "github.com"])
+        # Default to "*" (allow all) to simplify setup
+        return self._config.get("allowed_domains", ["*"])
 
     @allowed_domains.setter
     def allowed_domains(self, value: List[str]):

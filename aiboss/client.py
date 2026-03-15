@@ -16,7 +16,7 @@ class AibossClient:
         self.agent_id = get_agent_id()
         self.secret = get_agent_secret()
         self.session = requests.Session()
-        self.version = "0.1.1"
+        self.version = "0.1.2"
 
     def _generate_nonce(self, length: int = 16) -> str:
         return ''.join(random.choices(string.ascii_letters + string.digits, k=length))

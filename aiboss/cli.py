@@ -17,9 +17,9 @@ def enroll(
     code: str = typer.Argument(..., help="Enrollment code from the web dashboard"),
     url: str = typer.Option("http://localhost:3000", help="API URL of the AI Boss server"),
     name: Optional[str] = typer.Option(None, help="Name for this agent (defaults to hostname)"),
-    capabilities: Optional[List[str]] = typer.Option(None, help="List of capabilities (default: scrape, ping)")
+    capabilities: Optional[List[str]] = typer.Option(None, help="List of capabilities (default: *)")
 ):
-    """Enroll a new agent."""
+    """Enroll a new agent. By default, it registers with '*' capability to receive all tasks."""
     if not name:
         name = socket.gethostname()
         
@@ -30,9 +30,9 @@ def enroll(
     
     client = AibossClient(base_url=url)
     try:
-        # If no capabilities provided, default to scrape and ping
+        # If no capabilities provided, default to wildcard *
         if not capabilities:
-            capabilities = ["scrape", "ping"]
+            capabilities = ["*"]
         
         result = client.enroll(code, name, capabilities)
         

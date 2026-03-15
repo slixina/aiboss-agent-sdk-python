@@ -91,11 +91,16 @@ class Sandbox:
 
         # Check whitelist if configured
         if self.allowed_domains:
-            allowed = False
-            for domain in self.allowed_domains:
-                if hostname == domain or hostname.endswith("." + domain):
-                    allowed = True
-                    break
+            # Check for wildcard (allow all)
+            if "*" in self.allowed_domains:
+                allowed = True
+            else:
+                allowed = False
+                for domain in self.allowed_domains:
+                    if hostname == domain or hostname.endswith("." + domain):
+                        allowed = True
+                        break
+            
             if not allowed:
                 raise SandboxError(f"Domain not allowed: {hostname}")
 
