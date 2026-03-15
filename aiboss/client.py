@@ -16,7 +16,7 @@ class AibossClient:
         self.agent_id = get_agent_id()
         self.secret = get_agent_secret()
         self.session = requests.Session()
-        self.version = "0.1.0"
+        self.version = "0.1.1"
 
     def _generate_nonce(self, length: int = 16) -> str:
         return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
@@ -102,7 +102,9 @@ class AibossClient:
         headers = self._sign_request("POST", url, payload)
         
         try:
-            response = self.session.post(url, json=payload, headers=headers)
+            # Send raw JSON string to ensure body matches signature calculation (no spaces)
+            data_str = json.dumps(payload, separators=(',', ':'))
+            response = self.session.post(url, data=data_str, headers=headers)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
@@ -131,7 +133,9 @@ class AibossClient:
         headers = self._sign_request("POST", url, payload)
         
         try:
-            response = self.session.post(url, json=payload, headers=headers)
+            # Send raw JSON string to ensure body matches signature calculation (no spaces)
+            data_str = json.dumps(payload, separators=(',', ':'))
+            response = self.session.post(url, data=data_str, headers=headers)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:

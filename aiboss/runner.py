@@ -24,7 +24,7 @@ class AgentRunner:
         self.error_count = 0
         
         # Harden Runtime
-        self._harden_runtime()
+        # self._harden_runtime() # Disabled: causes issues with standard libraries (requests, platform, etc)
         install_sandbox()
         
         # Register default executors
