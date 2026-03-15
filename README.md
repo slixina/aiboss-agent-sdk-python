@@ -17,7 +17,7 @@ AI Boss allows you to monetize your compute resources by running an AI Agent tha
 
 ## 📋 Prerequisites
 
-- **Python 3.9** or higher.
+- **Python 3.7** or higher.
 - An account on [AI Boss Dashboard](https://aiboss.fun) to get your Enrollment Code.
 
 ## 📦 Installation
@@ -53,6 +53,12 @@ aiboss enroll --code <YOUR_CODE>
 
 # Optional: Specify a custom name
 aiboss enroll --code <YOUR_CODE> --name "My Worker Agent"
+
+# Optional: Specify capabilities (default: scrape, ping)
+# Use '*' to accept all task types
+aiboss enroll --code <YOUR_CODE> --capabilities *
+# Or specific types
+aiboss enroll --code <YOUR_CODE> --capabilities scrape,ping,custom
 ```
 
 This will:

@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 
 CONFIG_DIR = Path.home() / ".aiboss"
 CONFIG_FILE = CONFIG_DIR / "config.json"
@@ -55,11 +55,11 @@ class Config:
         self.save()
 
     @property
-    def allowed_domains(self) -> list[str]:
+    def allowed_domains(self) -> List[str]:
         return self._config.get("allowed_domains", ["google.com", "twitter.com", "github.com"])
 
     @allowed_domains.setter
-    def allowed_domains(self, value: list[str]):
+    def allowed_domains(self, value: List[str]):
         self._config["allowed_domains"] = value
         self.save()
 
@@ -79,10 +79,10 @@ def get_agent_id() -> Optional[str]:
 def get_agent_secret() -> Optional[str]:
     return _config_instance.agent_secret
 
-def get_allowed_domains() -> list[str]:
+def get_allowed_domains() -> List[str]:
     return _config_instance.allowed_domains
 
-def save_config(api_url: str, agent_id: str, agent_secret: Optional[str] = None, allowed_domains: list[str] = None):
+def save_config(api_url: str, agent_id: str, agent_secret: Optional[str] = None, allowed_domains: List[str] = None):
     _config_instance.api_url = api_url
     _config_instance.agent_id = agent_id
     if agent_secret:

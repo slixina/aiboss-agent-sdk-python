@@ -7,6 +7,7 @@ from .config import get_agent_id, get_api_url, save_config
 from .runner import AgentRunner
 from rich.console import Console
 from rich.table import Table
+from typing import Optional, List
 
 app = typer.Typer()
 console = Console()
@@ -15,7 +16,8 @@ console = Console()
 def enroll(
     code: str = typer.Argument(..., help="Enrollment code from the web dashboard"),
     url: str = typer.Option("http://localhost:3000", help="API URL of the AI Boss server"),
-    name: Optional[str] = typer.Option(None, help="Name for this agent (defaults to hostname)")
+    name: Optional[str] = typer.Option(None, help="Name for this agent (defaults to hostname)"),
+    capabilities: Optional[List[str]] = typer.Option(None, help="List of capabilities (default: scrape, ping)")
 ):
     """Enroll a new agent."""
     if not name:
@@ -28,8 +30,9 @@ def enroll(
     
     client = AibossClient(base_url=url)
     try:
-        # TODO: Auto-discover capabilities
-        capabilities = ["scrape", "ping"]
+        # If no capabilities provided, default to scrape and ping
+        if not capabilities:
+            capabilities = ["scrape", "ping"]
         
         result = client.enroll(code, name, capabilities)
         
