@@ -128,3 +128,11 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for deta
 ## 📄 License
 
 MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+## 📝 Changelog
+
+### v0.1.3
+- **Fix**: Changed `enrollment_code` payload field to `enrollmentCode` to match backend specification.
+- **Feature**: Automatically collect and append `systemInfo` (OS, release, architecture, Python version) during enrollment.

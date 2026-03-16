@@ -120,3 +120,11 @@ A: 运行 `python --version` 检查版本。你需要 Python 3.9+。
 ## 📄 许可证
 
 MIT License. 详见 [LICENSE](LICENSE) 文件。
+
+---
+
+## 📝 更新日志 (Changelog)
+
+### v0.1.3
+- **修复**: 将注册请求参数中的 `enrollment_code` 修正为驼峰命名 `enrollmentCode`，以匹配后端接口规范。
+- **新增**: 在注册时自动采集并发送 `systemInfo`（操作系统、版本、架构、Python版本），便于后端统计。

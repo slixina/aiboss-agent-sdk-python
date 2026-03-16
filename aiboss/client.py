@@ -16,7 +16,7 @@ class AibossClient:
         self.agent_id = get_agent_id()
         self.secret = get_agent_secret()
         self.session = requests.Session()
-        self.version = "0.1.2"
+        self.version = "0.1.3"
 
     def _generate_nonce(self, length: int = 16) -> str:
         return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
@@ -57,13 +57,21 @@ class AibossClient:
             "Content-Type": "application/json"
         }
 
-    def enroll(self, enrollment_code: str, name: str, capabilities: List[str]) -> Dict[str, Any]:
+    def enroll(self, enrollmentCode: str, name: str, capabilities: List[str]) -> Dict[str, Any]:
         """Enroll a new agent."""
+        system_info = {
+            "os": platform.system(),
+            "release": platform.release(),
+            "machine": platform.machine(),
+            "python_version": platform.python_version()
+        }
+        
         payload = {
-            "enrollment_code": enrollment_code,
+            "enrollmentCode": enrollmentCode,
             "name": name,
             "capabilities": capabilities,
-            "version": self.version
+            "version": self.version,
+            "systemInfo": system_info
         }
         
         try:
